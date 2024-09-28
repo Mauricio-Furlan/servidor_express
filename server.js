@@ -28,7 +28,8 @@ app.post('/scrapping', (req, res) => {
 
     axios.post('https://www.tibia.com/charactertrade/?subtopic=currentcharactertrades', new URLSearchParams(formData).toString(), {
         headers: {
-            'Content-Type': 'application/x-www-form-urlencoded'
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
         }
     }).then(response => response.data)
     .then(html => {
