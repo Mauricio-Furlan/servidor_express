@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors')
 const axios = require('axios'); 
+const { HttpsProxyAgent } = require('https-proxy-agent'); 
 
 const app = express();
 app.use(cors({
@@ -10,6 +11,9 @@ app.use(cors({
 // analisa o corpo da requisição (dados do formulário)
 app.use(express.urlencoded({ extended: true} ));
 const port = process.env.PORT || 3000;
+
+const proxyUrl = 'https://47.88.31.196:8080'; // Exemplo: http://proxy.example.com:8080
+const agent = new HttpsProxyAgent(proxyUrl);
 
 app.get('/', (req, res) => {
     res.send('ok')
@@ -30,13 +34,15 @@ app.post('/scrapping', (req, res) => {
         headers: {
             'Content-Type': 'application/x-www-form-urlencoded',
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/58.0.3029.110 Safari/537.36'
-        }
+        },
+        httpsAgent: agent
     }).then(response => response.data)
     .then(html => {
         res.send(html)
     })
     .catch(error => {
         console.error('Erro ao fazer scraping:', error);
+        res.status(500).send('Erro ao fazer scraping');
     });
 
 })
