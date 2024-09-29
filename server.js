@@ -32,8 +32,8 @@ app.post('/scrapping', (req, res) => {
         currentpage: req.body.currentpage || 1,
         order_column: req.body.order_column || 101,
         order_direction: req.body.order_direction || 1,
-        filter_world: req.body.filter_world || '',
-        filter_profession: req.body.filter_profession || ''
+        filter_world: req.body.world || '',
+        filter_profession: req.body.vocation || ''
     };
 
     axios.post('https://www.tibia.com/charactertrade/?subtopic=currentcharactertrades', new URLSearchParams(formData).toString(), {
